@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dan's Booms | Home</title>
-  <meta name="description" content="Dan's Booms &mdash; fireworks and more. Shop our products online.">
+  <title>Dan's Booms | About</title>
+  <meta name="description" content="Learn more about Dan's Booms.">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
 
   <!-- Bootstrap 5 (latest) -->
@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-
 
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
@@ -31,10 +30,10 @@
         <div class="collapse navbar-collapse" id="navMain">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="about.html">About</a>
+              <a class="nav-link active" aria-current="page" href="about.html">About</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="contact.html">Contact</a>
@@ -46,38 +45,28 @@
   </header>
 
   <main id="main-content" tabindex="-1">
-    <!-- Hero -->
-    <section class="hero text-center">
+    <section class="py-5">
       <div class="container">
-        <h1 class="display-5 fw-bold">Welcome to Dan's Booms</h1>
-        <p class="lead text-muted">[Placeholder: add a short tagline about your business here.]</p>
-        <a href="#shop" class="btn btn-primary btn-lg mt-2">Shop Now</a>
-      </div>
-    </section>
-
-    <!-- Ecwid Store -->
-    <section id="shop" class="py-5">
-      <div class="container">
-        <h2 class="text-center mb-4">Our Products</h2>
-
-        <!--
-          Ecwid store embed.
-          Replace YOUR_STORE_ID (in both the script src and the div id below)
-          with your real Ecwid Store ID from your Ecwid dashboard.
-        -->
-        <script data-cfasync="false" type="text/javascript"
-                src="https://app.ecwid.com/script.js?YOUR_STORE_ID&data_platform=code_your_own"
-                charset="utf-8"></script>
-        <div id="my-store-YOUR_STORE_ID"></div>
-        <script type="text/javascript">
-          xProductBrowser(
-            "categoriesPerRow=3",
-            "views=grid(20,3) list(60) table(60)",
-            "categoryView=grid",
-            "searchView=list",
-            "id=my-store-YOUR_STORE_ID"
-          );
-        </script>
+        <h1 class="mb-4">About</h1>
+        <div class="row">
+          <div class="col-lg-8">
+            <p>[Placeholder: Tell your story here &mdash; who Dan's Booms is, how the business got started, and what makes it different.]</p>
+            <p>[Placeholder: Add details about your mission, values, or the products and services you offer.]</p>
+            <p>[Placeholder: Add any certifications, years in business, or community involvement here.]</p>
+          </div>
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 card-title">Quick Facts</h2>
+                <ul class="list-unstyled mb-0">
+                  <li>[Placeholder: Founded in ____]</li>
+                  <li>[Placeholder: Located in ____]</li>
+                  <li>[Placeholder: Serving ____]</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -93,12 +82,5 @@
   <!-- Bootstrap 5 JS (bundle includes Popper) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/main.js"></script>
-
-  <div id="my-store-141069618"></div>
-  <div>
-    <script data-cfasync="false" type="text/javascript" src="https://app.ecwid.com/script.js?141069618&data_platform=code&data_date=2026-08-21" charset="utf-8"></script><script type="text/javascript"> xProductBrowser("categoriesPerRow=3","views=grid(20,3) list(60) table(60)","categoryView=grid","searchView=list","id=my-store-141069618");</script>
-  </div>
-
-
 </body>
 </html>
