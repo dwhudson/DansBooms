@@ -52,13 +52,12 @@
 
           <div class="col-lg-7">
             <!--
-              NOTE: This form is front-end only for now.
-              To actually send messages you'll need a backend endpoint that:
-                1. Verifies the reCAPTCHA token server-side with your secret key
-                2. Sends the email (e.g. PHP mail(), SMTP, or a form service)
-              See js/main.js for the client-side submit handler stub.
+              Submits to contact.php (see that file) via fetch in js/main.js.
+              contact.php requires contact-config.php on the server — copy
+              contact-config.sample.php to contact-config.php and fill in
+              your reCAPTCHA secret key and destination email.
             -->
-            <form id="contactForm" novalidate>
+            <form id="contactForm" action="contact.php" method="post" novalidate>
               <div class="mb-3">
                 <label for="name" class="form-label">Name <span aria-hidden="true">*</span><span class="visually-hidden"> (required)</span></label>
                 <input type="text" class="form-control" id="name" name="name" required aria-required="true">
@@ -81,14 +80,8 @@
                 <textarea class="form-control" id="message" name="message" rows="5" required aria-required="true"></textarea>
                 <div class="invalid-feedback">Please enter a message.</div>
               </div>
-
-              <!--
-                Google reCAPTCHA widget.
-                Replace YOUR_RECAPTCHA_SITE_KEY with your site key from
-                https://www.google.com/recaptcha/admin
-              -->
               <div class="mb-3">
-                <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+                <div class="g-recaptcha" data-sitekey="6LeUPJ4tAAAAAJiBX7ei-T6RMgv1W2G8_VnaA_4S"></div>
                 <div id="recaptchaFeedback" class="text-danger small mt-1 d-none" role="alert" aria-live="assertive">Please confirm you're not a robot.</div>
               </div>
 

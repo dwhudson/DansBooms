@@ -26,25 +26,38 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // TODO: Replace with a real submission once a backend endpoint exists.
-    // The endpoint should verify `recaptchaResponse` server-side with your
-    // reCAPTCHA secret key before sending the email.
-    console.log('Contact form submitted (demo only, no backend wired up yet):', {
-      name: form.name.value,
-      email: form.email.value,
-      subject: form.subject.value,
-      message: form.message.value,
-      recaptchaResponse,
-    });
+    const submitButton = form.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
 
-    formStatus.textContent = 'Thanks! This form is not yet connected to a backend, so no message was actually sent.';
-    formStatus.classList.remove('d-none', 'alert-danger');
-    formStatus.classList.add('alert', 'alert-info');
+    const formData = new FormData(form);
+    formData.set('g-recaptcha-response', recaptchaResponse);
 
-    form.reset();
-    form.classList.remove('was-validated');
-    if (typeof grecaptcha !== 'undefined') {
-      grecaptcha.reset();
-    }
+    fetch('contact.php', { method: 'POST', body: formData })
+      .then((response) => response.json().catch(() => ({
+        success: false,
+        message: 'Unexpected response from the server.',
+      })))
+      .then((data) => {
+        formStatus.textContent = data.message
+          || (data.success ? 'Thanks! Your message has been sent.' : 'Something went wrong. Please try again.');
+        formStatus.classList.remove('d-none', 'alert-danger', 'alert-info');
+        formStatus.classList.add('alert', data.success ? 'alert-info' : 'alert-danger');
+
+        if (data.success) {
+          form.reset();
+          form.classList.remove('was-validated');
+        }
+        if (typeof grecaptcha !== 'undefined') {
+          grecaptcha.reset();
+        }
+      })
+      .catch(() => {
+        formStatus.textContent = 'Could not reach the server. Please try again later.';
+        formStatus.classList.remove('d-none', 'alert-info');
+        formStatus.classList.add('alert', 'alert-danger');
+      })
+      .finally(() => {
+        submitButton.disabled = false;
+      });
   });
 });
