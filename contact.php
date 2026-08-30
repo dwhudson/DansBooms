@@ -3,6 +3,13 @@ declare(strict_types=1);
 
 header('Content-Type: application/json');
 
+require __DIR__ . '/lib/PHPMailer/Exception.php';
+require __DIR__ . '/lib/PHPMailer/PHPMailer.php';
+require __DIR__ . '/lib/PHPMailer/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
+
 $config = __DIR__ . '/contact-config.php';
 if (!file_exists($config)) {
     http_response_code(500);
@@ -52,16 +59,35 @@ if (!is_array($verifyResult) || empty($verifyResult['success'])) {
     fail('reCAPTCHA verification failed. Please try again.');
 }
 
+if (!defined('SMTP_USERNAME') || !defined('SMTP_PASSWORD') || SMTP_USERNAME === '' || SMTP_PASSWORD === '') {
+    fail('Email service is not configured yet.', 500);
+}
+
 $to = CONTACT_TO_EMAIL;
 $mailSubject = "Dan's Booms contact form: " . ($subject !== '' ? $subject : 'New message');
 $body = "Name: $name\nEmail: $email\nSubject: $subject\n\n$message\n";
-$sendingDomain = defined('CONTACT_SENDING_DOMAIN') ? CONTACT_SENDING_DOMAIN : 'dansbooms.com';
-$fromAddress = "no-reply@$sendingDomain";
-$headers = "From: $fromAddress\r\n" .
-    "Reply-To: $name <$email>\r\n" .
-    "Content-Type: text/plain; charset=UTF-8";
+$smtpHost = defined('SMTP_HOST') ? SMTP_HOST : 'localhost';
+$smtpPort = defined('SMTP_PORT') ? SMTP_PORT : 465;
+$smtpSecure = defined('SMTP_SECURE') ? SMTP_SECURE : PHPMailer::ENCRYPTION_SMTPS;
 
-if (!mail($to, $mailSubject, $body, $headers, "-f$fromAddress")) {
+$mailer = new PHPMailer(true);
+try {
+    $mailer->isSMTP();
+    $mailer->Host = $smtpHost;
+    $mailer->Port = $smtpPort;
+    $mailer->SMTPAuth = true;
+    $mailer->SMTPSecure = $smtpSecure;
+    $mailer->Username = SMTP_USERNAME;
+    $mailer->Password = SMTP_PASSWORD;
+
+    $mailer->setFrom(SMTP_USERNAME, "Dan's Booms");
+    $mailer->addAddress($to);
+    $mailer->addReplyTo($email, $name);
+    $mailer->Subject = $mailSubject;
+    $mailer->Body = $body;
+
+    $mailer->send();
+} catch (PHPMailerException $e) {
     fail('Could not send message. Please try again later.', 500);
 }
 
