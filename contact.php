@@ -88,6 +88,7 @@ try {
 
     $mailer->send();
 } catch (PHPMailerException $e) {
+    error_log('Contact form mail error: ' . $mailer->ErrorInfo);
     fail('Could not send message. Please try again later.', 500);
 }
 
