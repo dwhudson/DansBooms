@@ -55,12 +55,13 @@ if (!is_array($verifyResult) || empty($verifyResult['success'])) {
 $to = CONTACT_TO_EMAIL;
 $mailSubject = "Dan's Booms contact form: " . ($subject !== '' ? $subject : 'New message');
 $body = "Name: $name\nEmail: $email\nSubject: $subject\n\n$message\n";
-$host = $_SERVER['HTTP_HOST'] ?? 'dansbooms.com';
-$headers = "From: no-reply@$host\r\n" .
+$sendingDomain = defined('CONTACT_SENDING_DOMAIN') ? CONTACT_SENDING_DOMAIN : 'dansbooms.com';
+$fromAddress = "no-reply@$sendingDomain";
+$headers = "From: $fromAddress\r\n" .
     "Reply-To: $name <$email>\r\n" .
     "Content-Type: text/plain; charset=UTF-8";
 
-if (!mail($to, $mailSubject, $body, $headers)) {
+if (!mail($to, $mailSubject, $body, $headers, "-f$fromAddress")) {
     fail('Could not send message. Please try again later.', 500);
 }
 
