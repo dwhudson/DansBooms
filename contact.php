@@ -89,7 +89,9 @@ try {
     $mailer->send();
 } catch (PHPMailerException $e) {
     error_log('Contact form mail error: ' . $mailer->ErrorInfo);
-    fail('Could not send message. Please try again later.', 500);
+    // TEMPORARY DEBUG: exposing the real error to the browser to work around
+    // not being able to locate this host's PHP error log. Revert once fixed.
+    fail('Could not send message: ' . $mailer->ErrorInfo, 500);
 }
 
 echo json_encode(['success' => true, 'message' => 'Thanks! Your message has been sent.']);
