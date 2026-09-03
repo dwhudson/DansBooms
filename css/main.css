@@ -1,8 +1,12 @@
-/* Brand variables */
+/* Brand variables — "Lavender Sapphire Mist" palette */
 :root {
-  --brand-primary: #dc2626;
-  --brand-primary-hover: #b91c1c;
-  --brand-dark: #1f2937;
+  --brand-primary: #34478c;        /* Sapphire */
+  --brand-primary-hover: #263568;  /* Sapphire, darker */
+  --brand-secondary: #a78bdb;      /* Lavender */
+  --brand-secondary-hover: #6b46a8;
+  --brand-mist: #f1eefa;           /* Mist */
+  --brand-mist-alt: #e7e1f5;       /* Mist, deeper */
+  --brand-dark: #2b2a3d;
 }
 
 body {
@@ -32,6 +36,19 @@ main {
   font-weight: 600;
 }
 
+.navbar-nav .nav-link:hover {
+  color: var(--brand-secondary-hover);
+}
+
+a {
+  color: var(--brand-primary);
+}
+
+a:hover,
+a:focus {
+  color: var(--brand-secondary-hover);
+}
+
 /* Logo placeholder (top-left, links to home) */
 .logo-placeholder {
   display: inline-flex;
@@ -39,11 +56,11 @@ main {
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 2px dashed #9ca3af;
+  border: 2px dashed var(--brand-secondary);
   border-radius: 6px;
   font-size: 0.65rem;
   font-weight: 700;
-  color: #6b7280;
+  color: var(--brand-secondary-hover);
   letter-spacing: 0.05em;
 }
 
@@ -56,7 +73,16 @@ main {
 /* Hero */
 .hero {
   padding: 4rem 0 3rem;
-  background-color: #f8f9fa;
+  background-color: var(--brand-mist);
+}
+
+/* Cards (Quick Facts, Get in Touch, etc.) get a soft mist border */
+.card {
+  border-color: var(--brand-mist-alt);
+}
+
+footer.bg-dark {
+  background-color: var(--brand-dark) !important;
 }
 
 /* Skip-to-content link: hidden until keyboard-focused */
